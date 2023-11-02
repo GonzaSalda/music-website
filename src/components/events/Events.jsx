@@ -1,3 +1,4 @@
+import SectionHeader from "../SectionHeader";
 import EventBox from "./EventBox";
 
 const getEvents = async () => {
@@ -10,6 +11,8 @@ const Events = async () => {
     return(
         <section className="section" id="tours">
             <div className="container mx-auto">
+                <SectionHeader pretitle='World Tour' title='Upcoming Events'/>
+                {/* event box */}
                 <EventBox events={events}a />
             </div>
         </section>
