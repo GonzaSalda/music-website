@@ -27,7 +27,7 @@ const Hero = () => {
   return <section className="h-[80vh]  xl:h-[850px]" id="home">
     <div className="container mx-auto  h-full flex justify-center items-center xl:justify-start">
         {/* text */}
-        <div className="h-full flex flex-col justify-center xl:items-start z-20 pt-12">
+        <div className="h-full flex flex-col justify-center items-center xl:items-start z-20 pt-12">
             <MouseParallaxContainer 
             globalFactorX={0.1}
             globalFactorY={0.2}
@@ -90,6 +90,47 @@ const Hero = () => {
                     </motion.div>
                 </MouseParallaxChild>
             </MouseParallaxContainer>
+
+            <motion.div
+             variants={fadeIn('up',1)}
+             initial='hidden'
+             whileInView={'show'}
+             viewport={{once:false, amount:0.7}}
+            className="min-h-[60px] flex items-center mb-6 text-[26px]">
+                <div className="hidden xl:flex items-center xl:gap-x-0">
+                    <div>World</div>
+                    <div className="relative w-2 h-2 mx-2 flex items-center justify-center">
+                        <Image fill src={'assets/hero/dot.svg'}/>
+                    </div>
+                    <div>Tour</div>
+                    <div className="relative w-2 h-2 mx-2 flex items-center justify-center">
+                        <Image fill src={'assets/hero/dot.svg'}/>
+                    </div>
+                    <div>2023</div>
+                </div>
+                {/* Icon */}
+                <div className="hidden xl:flex items-center justify-center relative w-7 h-7 mx-4">
+                    <Image fill src={'/assets/hero/mic.svg'}/>
+                </div>
+                {/* Animation */}
+                <TypeAnimation 
+                sequence={LocationSequence} 
+                wrapper='div' 
+                speed={10} 
+                deletionSpeed={10} 
+                repeat={Infinity} 
+                cursor={false}
+                />
+            </motion.div>
+
+            <motion.div
+                variants={fadeIn('up',1)}
+                initial='hidden'
+                whileInView={'show'}
+                viewport={{once:false, amount:0.7}}
+                >
+                <button className="btn btn-accent btn-lg">Get tickets</button>
+            </motion.div>
         </div>
         {/* Image */}
         <motion.div

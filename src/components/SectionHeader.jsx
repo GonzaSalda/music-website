@@ -5,7 +5,7 @@ import {fadeIn} from '../../variants';
 const SectionHeader = ({pretitle, title}) => {
   return <header>
     <motion.h3
-    variants={fadeIn('up', 0.2)}
+    variants={fadeIn('up', 0.1)}
     initial= 'hidden'
     whileInView={'show'}
     viewport={{once:false , amount:0.3}}
@@ -14,7 +14,7 @@ const SectionHeader = ({pretitle, title}) => {
         {pretitle}
     </motion.h3>
     <motion.h2 
-    variants={fadeIn('up', 0.4)}
+    variants={fadeIn('up', 0.2)}
     initial='hidden'
     whileInView={'show'}
     viewport={{once:false, amount:0.3}}
