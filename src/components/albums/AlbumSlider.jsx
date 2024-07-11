@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import useSWR from "swr";
-import image from "next/image";
 import { AudioPlayer } from "react-audio-play";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, FreeMode, Navigation, Thumbs } from "swiper/modules";
@@ -14,12 +13,29 @@ import Image from "next/image";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const AlbumSlider = () => {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { data, error } = useSWR("http://localhost:4000/albums", fetcher);
   if (error) return "Failed to featch data";
   if (!data) return "Loading...";
   return (
     <>
-      <Swiper>
+      <Swiper
+        className="album-slider"
+        effect={"coverflow"}
+        speed={1000}
+        spaceBetween={80}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
+        modules={[EffectCoverflow, Navigation, FreeMode, Thumbs]}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }}
+      >
         {data.map((album) => {
           return (
             <SwiperSlide key={album.id} className="mb-12">
@@ -39,12 +55,20 @@ const AlbumSlider = () => {
                   <div className="flex-1 flex flex-col xl:px-12">
                     {album.tracks?.map((track, index) => {
                       return (
-                        <div key={index}>
+                        <div
+                          key={index}
+                          className="flex flex-1 w-full h[500px]"
+                        >
+                          {/* track name */}
                           <div className="flex flex-1 items-center gap-x-2 capitalize font-semibold xl:font-extrabold">
-                            <div>0{index + 1}.</div>
-                            <div>{track.name}</div>
+                            <div className="text-accent text-sm xl:text-lg">
+                              0{index + 1}.
+                            </div>
+                            <div className="text-sm xl:text-base">
+                              {track.name}
+                            </div>
                           </div>
-
+                          {/* player */}
                           <div>
                             <AudioPlayer
                               style={{
@@ -71,7 +95,53 @@ const AlbumSlider = () => {
           );
         })}
       </Swiper>
-      <Swiper>Thumb Slider</Swiper>
+
+      <Swiper
+        onSwiper={setThumbsSwiper}
+        breakpoints={{
+            320:{
+                slidesPerView: 2,
+                spaceBetween: 10,
+            },
+            425:{
+                slidesPerView: 2,
+                spaceBetween: 30,
+            },
+            768:{
+                slidesPerView: 3,
+                spaceBetween: 30,
+            },
+            1024:{
+                slidesPerView: 5,
+                spaceBetween: 30,
+            },
+            1440:{
+                slidesPerView: 5,
+                spaceBetween: 30,
+            },
+        }}
+        modules={[FreeMode, Navigation, Thumbs]}
+        spaceBetween={20}
+        slidesPerView={5}
+        freeMode={true}
+        watchSlidesProgress={true}
+        className="thumb-slider"
+      >
+        {data?.map((thumb, index) => {
+          return  <SwiperSlide key={index} className="relative group overflow-hidden border-2 border-transparent w-[254px] rounded-[10px]">
+              {/* img */}
+              <div className="relative w-[195px] h-[195px] sm:w-[360px] sm:h-[360px] md:w-[240px] md:max-h-[240px] cursor-pointer">
+                <Image
+                  src={thumb.img}
+                  fill
+                  priority
+                  alt=""
+                  className="object-contain group-hover:scale-105 transition-all duration-300"
+                />
+              </div>
+            </SwiperSlide>        
+        })}
+      </Swiper>
     </>
   );
 };

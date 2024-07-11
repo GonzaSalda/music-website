@@ -6,6 +6,9 @@ body{
   @apply bg-primary font-montserrat text-white;
   
 } 
+.text-accent{
+  @apply text-accent-DEFAUlt;
+}
 
 .pretitle{
   @apply font-alexBrush text-[42px] text-accent-DEFAUlt leading-none;
@@ -95,4 +98,17 @@ body{
 
 .active{
   @apply border-b-2 border-accent-DEFAUlt;
+}
+
+/* Album slider */
+.album-slider .rap-container .rap-volume .rap-volume-controls{
+  @apply !bg-accent-DEFAUlt;  
+}
+.album-slider .rap-container .rap-slider{
+  @apply !bg-accent-DEFAUlt;
+}
+
+/* Thumb slider */
+.thumb-slider .swiper-slide-thumb-active{
+  @apply border-2 border-accent-DEFAUlt overflow-hidden transition-all duration-700;  
 }
